@@ -16,9 +16,13 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
+
         self.__name = name
         self.price = price
         self.quantity = quantity
+
+        if self not in Item.all:
+            Item.all.append(self)
 
     @property
     def name(self):
@@ -49,21 +53,21 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, file_items):
+        """Иницииализирует экземпляры класса из файла."""
+
         cls.all = []
 
         with open(file_items, encoding='cp1251') as csv_file:
             file = DictReader(csv_file)
 
             for element in file:
-                name = element['name']
+                __name = element['name']
                 price = float(element['price'])
                 quantity = int(element['quantity'])
-                item = cls(name, price, quantity)
-                item.name = name
-                item.price = price
-                item.quantity = quantity
-                cls.all.append(item)
+                cls(__name, price, quantity)
 
     @staticmethod
     def string_to_number(str_num):
+        """Возвращает число из числа строки."""
+
         return int(float(str_num))
