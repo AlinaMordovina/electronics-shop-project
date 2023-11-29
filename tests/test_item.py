@@ -1,11 +1,17 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
 from src.item import Item
+from src.phone import Phone
 
 
 @pytest.fixture
 def item():
     return Item("Планшет", 20000, 10)
+
+
+@pytest.fixture
+def phone():
+    return Phone("iPhone 14", 120_000, 5, 2)
 
 
 def test_item_initial(item):
@@ -46,3 +52,11 @@ def test_repr(item):
 
 def test_str(item):
     assert str(item) == 'Планшет'
+
+
+def test_add(item, phone):
+    assert item + phone == 15
+    assert item + item == 20
+    assert phone + phone == 10
+    assert item + 10 == "10 не является экземпляром класса Item."
+    assert phone + 23.5 == "23.5 не является экземпляром класса Phone."

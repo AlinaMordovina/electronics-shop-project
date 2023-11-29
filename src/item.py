@@ -30,6 +30,12 @@ class Item:
     def __str__(self):
         return f'{self.__name}'
 
+    def __add__(self, other):
+        if isinstance(other, self.__class__):
+            return self.quantity + other.quantity
+        else:
+            return f"{other} не является экземпляром класса {self.__class__.__name__}."
+
     @property
     def name(self):
         return self.__name
