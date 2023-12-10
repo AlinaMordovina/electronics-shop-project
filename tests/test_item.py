@@ -45,7 +45,8 @@ def test_instantiate_from_csv():
 def test_instantiate_from_csv_raises():
     with pytest.raises(FileNotFoundError):
         Item.instantiate_from_csv('item.csv')
-
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv('../tests/items_test.csv')
 
 def test_string_to_number():
     assert Item.string_to_number("5.5") == 5
