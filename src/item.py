@@ -1,6 +1,13 @@
 from csv import DictReader
 
 
+class InstantiateCSVError(Exception):
+
+    def __init__(self, massage):
+        self.massage = massage
+        super().__init__(self.massage)
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -70,14 +77,20 @@ class Item:
 
         cls.all = []
 
-        with open(file_items, encoding='cp1251') as csv_file:
-            file = DictReader(csv_file)
+        try:
+            with open(file_items, encoding='cp1251') as csv_file:
+                file = DictReader(csv_file)
 
-            for element in file:
-                __name = element['name']
-                price = float(element['price'])
-                quantity = int(element['quantity'])
-                cls(__name, price, quantity)
+                for element in file:
+                    __name = element['name']
+                    price = float(element['price'])
+                    quantity = int(element['quantity'])
+                    cls(__name, price, quantity)
+
+        except FileNotFoundError:
+            raise FileNotFoundError(f'Отсутствует файл {file_items}.')
+        except KeyError:
+            raise InstantiateCSVError(f'Файл {file_items} поврежден.')
 
     @staticmethod
     def string_to_number(str_num):
