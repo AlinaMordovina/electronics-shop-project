@@ -46,7 +46,7 @@ def test_instantiate_from_csv_raises():
     with pytest.raises(FileNotFoundError):
         Item.instantiate_from_csv('item.csv')
     with pytest.raises(InstantiateCSVError):
-        Item.instantiate_from_csv('../tests/items_2_test.csv')
+        Item.instantiate_from_csv('../tests/items_wrong_test.csv')
 
 
 def test_string_to_number():
